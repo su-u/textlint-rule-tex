@@ -1,4 +1,4 @@
-import { TextlintRuleModule } from "@textlint/types";
+import { TextlintRuleModule } from '@textlint/types';
 
 export interface Options {
     allows?: string[];
@@ -19,7 +19,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
 
             // console.log(text);
             if (!matches && /\\label\{/g.exec(text)) {
-                const ruleError = new RuleError("「:」区切り文字が見つかりません。");
+                const ruleError = new RuleError('ラベルに区切り文字「:」が見つかりません。');
                 report(node, ruleError);
                 return;
             } else if(!matches) {

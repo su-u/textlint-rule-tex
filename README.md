@@ -1,0 +1,2 @@
+# textlint-rule-tex
+ 

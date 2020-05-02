@@ -195,3 +195,5 @@ tmp/
 temp/
 
 # End of https://www.gitignore.io/api/node,intellij+all
+
+/lib

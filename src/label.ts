@@ -4,6 +4,10 @@ export interface Options {
     allows?: string[];
 }
 
+const defaultPrefixes = {
+    labelPrefix: ['sec', 'fig', 'eq', 'tab']
+};
+
 const report: TextlintRuleModule<Options> = (context, options = {}) => {
     const {Syntax, RuleError, report, getSource} = context;
     const allows = options.allows || [];
@@ -11,7 +15,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
         [Syntax.Str](node) {
             const text = getSource(node); // Get text
             const matches = /(?<=^\\label\{).*(?=:)/g.exec(text);
-            const ShouldLabelPrefixes = ['sec', 'fig', 'eq', 'tab'];
+            const opt = Object.assign({}, defaultPrefixes, options);
 
             if (!matches) {
                 const ruleError = new RuleError("「:」区切り文字が見つかりません。");
@@ -23,12 +27,12 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 return;
             }
             if (matches.every(match => {
-                return ShouldLabelPrefixes.includes(match);
+                return opt.labelPrefix.includes(match);
             })) {
                 return;
             }
             const indexOfBugs = matches.index;
-            const ruleError = new RuleError("区切り文字が適切ではありません。", {
+            const ruleError = new RuleError(`ラベルのプレフィックスに「${opt.labelPrefix.join(', ')}」が含まれません。`, {
                 index: indexOfBugs
             });
             report(node, ruleError);

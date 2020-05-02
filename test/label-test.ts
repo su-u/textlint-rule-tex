@@ -23,7 +23,7 @@ tester.run("rule", rule, {
             text: `\\label{seca:スコアリング}`,
             errors: [
                 {
-                    message: "区切り文字が適切ではありません。",
+                    message: "ラベルのプレフィックスに「sec, fig, eq, tab」が含まれません。",
                     line: 1,
                 },
             ]

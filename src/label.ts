@@ -13,13 +13,16 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
     const allows = options.allows || [];
     return {
         [Syntax.Str](node) {
-            const text = getSource(node); // Get text
-            const matches = /(?<=^\\label\{).*(?=:)/g.exec(text);
+            const text = getSource(node);
+            const matches = /(?<=\\label\{).*(?=:)/gm.exec(text);
             const opt = Object.assign({}, defaultPrefixes, options);
 
-            if (!matches) {
+            // console.log(text);
+            if (!matches && /\\label\{/g.exec(text)) {
                 const ruleError = new RuleError("「:」区切り文字が見つかりません。");
                 report(node, ruleError);
+                return;
+            } else if(!matches) {
                 return;
             }
             const isIgnored = allows.some(allow => text.includes(allow));

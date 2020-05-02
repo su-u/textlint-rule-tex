@@ -1,14 +1,13 @@
 import TextLintTester from "textlint-tester";
 import rule from "../src/label";
 const tester = new TextLintTester();
-// ruleName, rule, { valid, invalid }
 tester.run("rule", rule, {
     valid: [
         // no problem
-        "\\label{sec:スコアリング}"
+        "\\label{sec:スコアリング}",
+        "\\newpage"
     ],
     invalid: [
-        // single match
         {
             text: "\\label{secスコアリング}",
             errors: [
@@ -18,9 +17,17 @@ tester.run("rule", rule, {
                 }
             ]
         },
-        // multiple match
         {
             text: `\\label{seca:スコアリング}`,
+            errors: [
+                {
+                    message: "ラベルのプレフィックスに「sec, fig, eq, tab」が含まれません。",
+                    line: 1,
+                },
+            ]
+        },
+        {
+            text: `\\section{スコアリング}\n\\label{seac:スコアリング}`,
             errors: [
                 {
                     message: "ラベルのプレフィックスに「sec, fig, eq, tab」が含まれません。",

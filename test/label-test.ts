@@ -1,5 +1,5 @@
 import TextLintTester from "textlint-tester";
-import rule from "../src";
+import rule from "../src/label";
 const tester = new TextLintTester();
 // ruleName, rule, { valid, invalid }
 tester.run("rule", rule, {

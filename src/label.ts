@@ -1,7 +1,6 @@
 import { TextlintRuleModule } from "@textlint/types";
 
 export interface Options {
-    // if the Str includes `allows` word, does not report it
     allows?: string[];
 }
 
@@ -9,9 +8,9 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
     const {Syntax, RuleError, report, getSource} = context;
     const allows = options.allows || [];
     return {
-        [Syntax.Str](node) { // "Str" node
+        [Syntax.Str](node) {
             const text = getSource(node); // Get text
-            const matches = /(?<=^\\label\{).*(?=:)/g.exec(text); // Found "bugs"
+            const matches = /(?<=^\\label\{).*(?=:)/g.exec(text);
             const ShouldLabelPrefixes = ['sec', 'fig', 'eq', 'tab'];
 
             if (!matches) {

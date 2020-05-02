@@ -3,7 +3,6 @@ import rule from '../src/label';
 const tester = new TextLintTester();
 tester.run('rule', rule, {
     valid: [
-        // no problem
         '\\label{sec:スコアリング}',
         '\\newpage'
     ],
@@ -26,14 +25,5 @@ tester.run('rule', rule, {
                 },
             ]
         },
-        // {
-        //     text: `\\section{スコアリング}\n\\label{seac:スコアリング}`,
-        //     errors: [
-        //         {
-        //             message: 'ラベルのプレフィックスに「sec, fig, eq, tab」が含まれません。',
-        //             line: 1,
-        //         },
-        //     ]
-        // },
     ]
 });
